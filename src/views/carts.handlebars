@@ -1,0 +1,32 @@
+<div
+  class="p-16 top-0 left-0 z-[-2] w-screen min-h-full bg-gray-700 bg-[radial-gradient(100%_50%_at_50%_0%,rgba(0,163,255,0.13)_0,rgba(0,163,255,0)_50%,rgba(0,163,255,0)_100%)]"
+>
+  <h1
+    class="flex justify-center items-center text-5xl text-white font-extrabold py-8"
+  >Cart</h1>
+
+  <button
+    class="flex items-center justify-center px-4 h-10 text-base font-medium border rounded-lg bg-gray-800 border-gray-700 text-gray-400 hover:bg-gray-900 hover:text-white"
+  ><a href="/products">Ver productos</a></button>
+  <button
+    class="flex items-center justify-center px-4 h-10 text-base font-medium border rounded-lg bg-gray-800 border-gray-700 text-gray-400 hover:bg-gray-900 hover:text-white"
+    onclick="emptyCart('{{cartId}}')"
+  >Vaciar el carrito</button>
+
+  {{#each cartproducts}}
+    <div class="flex justify-center">
+      <div
+        class="mt-8 flex flex-col text-white text-2xl font-extrabold gap-3 w-80"
+      >
+        <p>Producto: {{this.product.title}}</p>
+        <p>Precio: ${{this.product.price}}</p>
+        <p>Cantidad: {{this.quantity}}</p>
+        <button
+          type="button"
+          onclick="deleteProductById('{{cartId}}', '{{this.product._id}}')"
+          class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        >Eliminar</button>
+      </div>
+    </div>
+  {{/each}}
+</div>
