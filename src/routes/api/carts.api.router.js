@@ -6,6 +6,10 @@ import { CartController } from "../../controllers/cartController.js";
 const cartsApiRouter = Router();
 // Llamado de la función constructora:
 const cartController = new CartController();
+// Importación del middleware de auth:
+import { authMiddleware } from "../../middlewares/auth.js";
+
+cartsApiRouter.use(authMiddleware);
 
 // Rutas de carts:
 // Post que crea un nuevo cart:
@@ -28,6 +32,9 @@ cartsApiRouter.put("/:cid/product/:pid", cartController.updateProductQuantity);
 
 // Delete que vacía el cart:
 cartsApiRouter.delete("/:cid", cartController.emptyCart);
+
+// Post que finaliza la compra:
+cartsApiRouter.post("/:cid/checkout", cartController.checkOut);
 
 // Exportación del router de carts para utilizarlo desde app.js:
 export { cartsApiRouter };

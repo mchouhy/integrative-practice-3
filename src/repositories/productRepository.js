@@ -72,6 +72,7 @@ export class ProductRepository {
     stock,
     category,
     thumbnails,
+    owner,
   }) => {
     try {
       // Validación para que de error en caso de que falte completar un campo requerido:
@@ -97,6 +98,7 @@ export class ProductRepository {
         category,
         thumbnails: thumbnails || [],
         status: true,
+        owner,
       });
       // Función de mongoose que guarda el nuevo producto en la base de datos:
       await newProduct.save();

@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ["usuario", "admin"],
+    enum: ["usuario", "admin", "premium"],
     default: "usuario",
   },
   cart: {
@@ -33,4 +33,4 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-export const UserModel = mongoose.model("user", userSchema);
+export const userModel = mongoose.model("user", userSchema);

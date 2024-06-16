@@ -40,6 +40,11 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  owner: {
+    type: String,
+    required: true,
+    default: "admin",
+  },
 });
 
 // Exportación del model para utilizarlo en productService.js. En model se pasa como primer argumento el nombre de la colección y como segundo el "Schema":

@@ -7,7 +7,7 @@ const JWTStrategy = jwt.Strategy;
 // Traemos la extracción de JWT:
 const ExtractJWT = jwt.ExtractJwt;
 // Importación de UserModel:
-import { UserModel } from "../models/user.model.js";
+import { userModel } from "../models/user.model.js";
 
 const initializePassport = () => {
   passport.use(
@@ -19,7 +19,7 @@ const initializePassport = () => {
       },
       async (jwt_payload, done) => {
         try {
-          const user = await UserModel.findById(jwt_payload.user._id);
+          const user = await userModel.findById(jwt_payload.user._id);
           if (!user) {
             return done(null, false);
           }

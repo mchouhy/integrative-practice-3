@@ -32,5 +32,14 @@ usersApiRouter.get(
   userController.admin
 );
 
+// Ruta Post de cambio de contraseña:
+usersApiRouter.post("/new-password", userController.passwordResetRequest);
+
+// Ruta Post de restablecimiento de contraseña:
+usersApiRouter.post("password-reset", userController.resetPassword);
+
+// Ruta Put de cambio a rol Premium:
+usersApiRouter.put("/premium/:uid", userController.changeToRolePremium);
+
 // Exportación del router del api de users:
 export { usersApiRouter };

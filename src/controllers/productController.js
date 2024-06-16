@@ -7,29 +7,14 @@ const productRepository = new ProductRepository();
 export class ProductController {
   getProducts = async (request, response) => {
     try {
-      const { limit = 2, page = 1, sort, query } = request.query;
+      const { limit = 10, page = 1, sort, query } = request.query;
       const products = await productRepository.getProducts({
         limit: parseInt(limit),
         page: parseInt(page),
         sort,
         query,
       });
-      response.json({
-        status: "success",
-        payload: products,
-        page: products.page,
-        nextPage: products.nextPage,
-        previousPage: products.previousPage,
-        hasNextPage: products.hasNextPage,
-        hasPreviousPage: products.hasPreviousPage,
-        totalPages: products.totalPages,
-        previousLink: products.hasPreviousPage
-          ? `/api/products?limit=${limit}&page=${products.previousPage}&sort=${sort}&query=${query}`
-          : null,
-        nextLink: products.hasNextPage
-          ? `/api/products?limit=${limit}&page=${products.nextPage}&sort=${sort}&query=${query}`
-          : null,
-      });
+      response.json(products);
     } catch (error) {
       console.log("Error al obtener los productos de Mongo Atlas.", error);
       response.status(500).json({ error: "Error interno del servidor." });

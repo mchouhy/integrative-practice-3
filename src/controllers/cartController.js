@@ -2,16 +2,21 @@
 import { CartRepository } from "../repositories/cartRepository.js";
 // Llamado de la función constructora:
 const cartRepository = new CartRepository();
-// Importación del model de carts:
-import { cartModel } from "../models/carts.model.js";
 // Importación del model de tickets:
 import { TicketModel } from "../models/ticket.model.js";
 // Importación del model de usuarios:
-import { UserModel } from "../models/user.model.js";
+import { userModel } from "../models/user.model.js";
 // Importación del repo de productos:
 import { ProductRepository } from "../repositories/productRepository.js";
 // Llamado de la función constructora:
 const productRepository = new ProductRepository();
+// Importación del manejador de emails:
+import { EmailManager } from "../services/email.js";
+// Llamado de la función constructora:
+const emailManager = new EmailManager();
+// Importación de funciones de utils:
+import { generateUniqueCode } from "../utils/generateUniqueCode.js";
+import { calcTotal } from "../utils/calcTotal.js";
 
 // Función de clase constructora del controlador de Carts:
 export class CartController {
@@ -158,32 +163,7 @@ export class CartController {
         }
       }
 
-      const cartUser = await UserModel.findOne({ cart: cartId });
-
-      const generateUniqueCode = () => {
-        const characters =
-          "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        const codeLength = 8;
-        let code = "";
-
-        for (let i = 0; i < codeLength; i++) {
-          const randomIndex = Math.floor(Math.random() * characters.length);
-          code += characters.charAt(randomIndex);
-        }
-
-        const timestamp = Date.now().toString(36);
-        return code + "-" + timestamp;
-      };
-
-      const calcTotal = (products) => {
-        let total = 0;
-
-        products.forEach((item) => {
-          total += item.product.price * item.quantity;
-        });
-
-        return total;
-      };
+      const cartUser = await userModel;
 
       const ticket = new TicketModel({
         code: generateUniqueCode(),
@@ -197,6 +177,12 @@ export class CartController {
         noStockProducts.some((prodId) => prodId.equals(item.product))
       );
       await cart.save();
+
+      await emailManager.checkoutEmail(
+        cartUser.email,
+        cartUser.first_name,
+        cartUser._id
+      );
 
       response.render("checkout", {
         client: cartUser.first_name,

@@ -10,14 +10,12 @@ const viewController = new ViewController();
 import passport from "passport";
 // Importación del roleChecker:
 import { roleChecker } from "../middlewares/roleChecker.js";
-import { authMiddleware } from "../middlewares/auth.js";
 
 // Ruta GET para renderizar los productos:
 viewsRouter.get(
   "/products",
-  roleChecker(["usuario"]),
+  roleChecker(["usuario", "premium"]),
   passport.authenticate("jwt", { session: false }),
-  authMiddleware,
   viewController.renderProducts
 );
 
@@ -33,14 +31,30 @@ viewsRouter.get("/register", viewController.renderRegister);
 // Ruta GET para renderizar los productos en tiempo real para el admin:
 viewsRouter.get(
   "/realtimeproducts",
-  roleChecker(["admin"]),
+  roleChecker(["admin", "premium"]),
   viewController.renderRealTimeProducts
 );
 
 // Ruta GET para renderizar el login:
-viewsRouter.get("/chat", roleChecker(["usuario"]), viewController.renderChat);
+viewsRouter.get(
+  "/chat",
+  roleChecker(["usuario", "premium"]),
+  viewController.renderChat
+);
 
 // Ruta GET para renderizar el home:
 viewsRouter.get("/", viewController.renderHomePage);
+
+// Ruta GET para renderizar el restablecimiento de contraseña:
+viewsRouter.get("/password-reset", viewController.renderPasswordReset);
+
+// Ruta GET para renderizar el cambio de contraseña:
+viewsRouter.get("/password", viewController.renderNewPassword);
+
+// Ruta GET para renderizar el inicio del restablecimiento:
+viewsRouter.get("/confirmation-email", viewController.renderConfirmationEmail);
+
+// Ruta GET para renderizar el panel premium:
+viewsRouter.get("/premium-user", viewController.renderPremiumRole);
 
 export default viewsRouter;

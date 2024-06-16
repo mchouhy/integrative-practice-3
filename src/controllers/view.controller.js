@@ -41,7 +41,6 @@ export class ViewController {
         sort,
         limit,
         user,
-        isAdmin: user && user.role === "admin",
         cartId,
       });
     } catch (error) {
@@ -93,5 +92,21 @@ export class ViewController {
 
   async renderHomePage(request, response) {
     response.render("home");
+  }
+
+  async renderPasswordReset(request, response) {
+    response.render("password-reset");
+  }
+
+  async renderNewPassword(request, response) {
+    response.render("new-password");
+  }
+
+  async renderConfirmationEmail(request, response) {
+    response.render("confirmation-email");
+  }
+
+  async renderPremiumRole(request, response) {
+    response.render("premium-user");
   }
 }
