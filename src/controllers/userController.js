@@ -149,6 +149,13 @@ export class UserController {
           error: "El código de restablecimiento de contraseña es inválido.",
         });
 
+      const resetToken = user.resetToken;
+      if (!resetToken || resetToken.token !== token) {
+        return response.render("password-reset", {
+          error: "El token de restablecimiento de contraseña es inválido",
+        });
+      }
+
       const now = new Date();
       if (now > tokenReset.expiresAt)
         return response.redirect("/password-reset");

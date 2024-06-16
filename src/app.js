@@ -95,6 +95,8 @@ app.use("/api/loggertest", loggerApiRouter);
 // Endpoint de la ruta de views:
 app.use("/", viewsRouter);
 
+app.set("view cache", false);
+
 // PUERTO:
 // Función que escucha cualquier cambio en el servidor:
 const httpServer = app.listen(port, () =>
