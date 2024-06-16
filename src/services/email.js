@@ -6,8 +6,8 @@ export class EmailManager {
       service: "gmail",
       port: 587,
       auth: {
-        user: "marianochouhy@gmail.com",
-        pass: "5307Pjalpaul",
+        user: "mchouhycoderhouse@gmail.com",
+        pass: "attt uhsl vkev wloj",
       },
     });
   }
@@ -15,7 +15,7 @@ export class EmailManager {
   async checkoutEmail(email, first_name, ticket) {
     try {
       const mailOptions = {
-        from: "Email de prueba <marianochouhy@gmail.com>",
+        from: "Email de prueba <mchouhycoderhouse@gmail.com>",
         to: email,
         subject: "Confirmación de compra",
         html: `
@@ -34,7 +34,7 @@ export class EmailManager {
   async passwordResetEmail(email, first_name, token) {
     try {
       const mailOptions = {
-        from: "marianochouhy@gmail.com",
+        from: "mchouhycoderhouse@gmail.com",
         to: email,
         subject: "Restablecimiento de Contraseña",
         html: `

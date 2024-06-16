@@ -20,12 +20,18 @@
         class="flex items-center justify-center px-4 h-10 text-base font-medium border rounded-lg bg-gray-800 border-gray-700 text-gray-400 hover:bg-gray-900 hover:text-white"
       >Iniciar sesión</button>
       <br />
-      <div class="flex gap-2">
+      <div class="flex flex-col gap-2">
         <p class="text-base font-medium text-gray-400">¿No tienes una cuenta?</p>
         <a
-          class="text-gray-400 hover:text-white hover:font-extrabold"
+          class="text-gray-400 text-base hover:text-white hover:font-extrabold"
           href="/register"
         >Registrar usuario</a>
+        <br />
+        <p class="text-base font-medium text-gray-400">¿Olvidaste tu contraseña?
+          <a
+            class="text-gray-400 text-base hover:text-white hover:font-extrabold"
+            href="/password-reset"
+          >Restablecer contraseña</a></p>
       </div>
     </form>
   </div>
