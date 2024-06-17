@@ -31,6 +31,10 @@ const userSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Cart",
   },
+  resetToken: {
+    token: String,
+    expiresAt: Date,
+  },
 });
 
 export const userModel = mongoose.model("user", userSchema);

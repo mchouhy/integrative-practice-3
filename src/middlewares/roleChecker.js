@@ -6,7 +6,7 @@ export const roleChecker = (allowedRoles) => (request, response, next) => {
   if (token) {
     jwt.verify(token, "coderhouse", (error, decoded) => {
       if (error) {
-        res.status(403).send("Acceso denegado. Token inválido.");
+        response.status(403).send("Acceso denegado. Token inválido.");
       } else {
         const userRole = decoded.user.role;
         if (allowedRoles.includes(userRole)) {

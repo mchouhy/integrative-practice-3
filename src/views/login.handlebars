@@ -30,8 +30,12 @@
       <p class="text-base font-medium text-gray-400">¿Olvidaste tu contraseña?
         <a
           class="text-gray-400 text-base hover:text-white hover:font-extrabold"
-          href="/password-reset"
+          href="/request-password-reset"
         >Restablecer contraseña</a></p>
+      {{#if success}}
+        <br />
+        <p class="text-green-700 text-xl">{{success}}</p>
+      {{/if}}
     </form>
   </div>
 </div>

@@ -74,7 +74,7 @@ export class CartController {
       });
     } catch (error) {
       console.log("Error al eliminar el producto del cart", error);
-      res.status(500).json({
+      response.status(500).json({
         status: "error",
         error: "Error interno del servidor",
       });
@@ -93,7 +93,7 @@ export class CartController {
       response.json(updatedCart);
     } catch (error) {
       console.log("Error al actualizar el cart", error);
-      res.status(500).json({
+      response.status(500).json({
         status: "error",
         error: "Error interno del servidor",
       });
@@ -120,7 +120,7 @@ export class CartController {
         "Error al actualizar la cantidad de productos el cart.",
         error
       );
-      res.status(500).json({
+      response.status(500).json({
         status: "error",
         error: "Error interno del servidor.",
       });
@@ -138,7 +138,7 @@ export class CartController {
       });
     } catch (error) {
       console.log("Error al intentar vaciar el cart.", error);
-      res.status(500).json({
+      response.status(500).json({
         status: "error",
         error: "Error interno del servidor",
       });

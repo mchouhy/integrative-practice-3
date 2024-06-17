@@ -46,8 +46,7 @@ export class EmailManager {
                     <p><strong>${token}</strong></p>
                     <br />
                     <p>Este código expirará en 1 hora.</p>
-                    <br />
-                    <a href="http://localhost:8080/password">Restablecer Contraseña</a>
+                    <a href="http://localhost:8080/password-reset">Restablecer Contraseña</a>
                     <p>Si no solicitaste este restablecimiento, ignora este correo.</p>
                 `,
       };

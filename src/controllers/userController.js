@@ -127,13 +127,13 @@ export class UserController {
       const user = await userModel.findOne({ email });
       if (!user) return response.status(404).send("Usuario inexistente.");
       const token = tokenReset();
-      user.tokenReset = {
+      user.resetToken = {
         token: token,
         expiresAt: new Date(Date.now() + 3600000),
       };
       await user.save();
       await emailManager.passwordResetEmail(email, user.first_name, token);
-      response.redirect("/confirmation-email");
+      response.redirect("/password-reset");
     } catch (error) {
       console.error(error);
       response.status(500).send("Error interno del servidor.");
@@ -145,32 +145,41 @@ export class UserController {
     try {
       const user = await userModel.findOne({ email });
       if (!user)
-        return response.render("new-password", {
-          error: "El código de restablecimiento de contraseña es inválido.",
+        return response.render("password-reset", {
+          error: "No existe un usuario con el correo ingresado.",
         });
 
       const resetToken = user.resetToken;
+      console.log({ token, resetToken });
       if (!resetToken || resetToken.token !== token) {
-        return response.render("password-reset", {
+        return response.render("request-password-reset", {
           error: "El token de restablecimiento de contraseña es inválido",
         });
       }
 
       const now = new Date();
       if (now > tokenReset.expiresAt)
-        return response.redirect("/password-reset");
+        return response.render("password-reset", {
+          error:
+            "Se ha expirado la validez del token ingresado. Vuelve a iniciar el proceso de restablecimiento.",
+        });
 
       if (isValidPassword(password, user))
-        return response.render("new-password", {
+        return response.render("password-reset", {
           error: "La nueva contraseña tiene que ser diferente a la anterior.",
         });
+
       user.password = createHash(password);
       user.resetToken = undefined;
       await user.save();
+      // response.render("login", {
+      //   success:
+      //     "¡Contraseña reestablecida con éxito! Ya puedes iniciar sesión.",
+      // });
       return response.redirect("/login");
     } catch (error) {
       console.error(error);
-      return res.status(500).render("password-reset", {
+      return response.status(500).render("password-reset", {
         error: "Error interno del servidor",
       });
     }

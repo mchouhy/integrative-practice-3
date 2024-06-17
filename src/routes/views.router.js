@@ -48,11 +48,11 @@ viewsRouter.get("/", viewController.renderHomePage);
 // Ruta GET para renderizar el restablecimiento de contraseña:
 viewsRouter.get("/password-reset", viewController.renderPasswordReset);
 
-// Ruta GET para renderizar el cambio de contraseña:
-viewsRouter.get("/password", viewController.renderNewPassword);
-
 // Ruta GET para renderizar el inicio del restablecimiento:
-viewsRouter.get("/confirmation-email", viewController.renderConfirmationEmail);
+viewsRouter.get(
+  "/request-password-reset",
+  viewController.renderRequestPasswordReset
+);
 
 // Ruta GET para renderizar el panel premium:
 viewsRouter.get("/premium-user", viewController.renderPremiumRole);

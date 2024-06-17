@@ -33,10 +33,13 @@ usersApiRouter.get(
 );
 
 // Ruta Post de cambio de contraseña:
-usersApiRouter.post("/new-password", userController.passwordResetRequest);
+usersApiRouter.post(
+  "/request-password-reset",
+  userController.passwordResetRequest
+);
 
 // Ruta Post de restablecimiento de contraseña:
-usersApiRouter.post("password-reset", userController.resetPassword);
+usersApiRouter.post("/password-reset", userController.resetPassword);
 
 // Ruta Put de cambio a rol Premium:
 usersApiRouter.put("/premium/:uid", userController.changeToRolePremium);

@@ -98,12 +98,8 @@ export class ViewController {
     response.render("password-reset");
   }
 
-  async renderNewPassword(request, response) {
-    response.render("new-password");
-  }
-
-  async renderConfirmationEmail(request, response) {
-    response.render("confirmation-email");
+  async renderRequestPasswordReset(request, response) {
+    response.render("request-password-reset");
   }
 
   async renderPremiumRole(request, response) {
