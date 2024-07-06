@@ -1,0 +1,240 @@
+openapi: 3.0.1
+info:
+  title: Cart API
+  description: API documentation for Cart management
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: Local server
+tags:
+  - name: Cart
+    description: API for cart
+paths:
+  /api/carts/{cid}:
+    get:
+      summary: Get products in a cart
+      description: Get all products in a cart by the cart ID
+      tags:
+        - Cart
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          schema:
+            type: string
+          description: ID of the cart to retrieve products from
+      responses:
+        200:
+          description: A list of products in the cart
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CartProducts"
+        500:
+          description: Internal server error
+    put:
+      summary: Update products in a cart
+      description: Update the products in a cart by the cart ID
+      tags:
+        - Cart
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          schema:
+            type: string
+          description: ID of the cart to update
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/CartProduct"
+      responses:
+        200:
+          description: Cart products successfully updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+        500:
+          description: Internal server error
+    delete:
+      summary: Delete all products in a cart
+      description: Remove all products from a cart by the cart ID
+      tags:
+        - Cart
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          schema:
+            type: string
+          description: ID of the cart to delete products from
+      responses:
+        200:
+          description: All products successfully deleted from cart
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+        500:
+          description: Internal server error
+  /api/carts/{cid}/product/{pid}:
+    post:
+      summary: Add a product to a cart
+      description: Add a product to the cart by the cart ID and product ID
+      tags:
+        - Cart
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          schema:
+            type: string
+          description: ID of the cart to add product to
+        - in: path
+          name: pid
+          required: true
+          schema:
+            type: string
+          description: ID of the product to add to the cart
+      responses:
+        200:
+          description: Product successfully added to cart
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+        500:
+          description: Internal server error
+    delete:
+      summary: Delete a product from a cart
+      description: Remove a product from the cart by the cart ID and product ID
+      tags:
+        - Cart
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          schema:
+            type: string
+          description: ID of the cart to delete product from
+        - in: path
+          name: pid
+          required: true
+          schema:
+            type: string
+          description: ID of the product to delete from the cart
+      responses:
+        200:
+          description: Product successfully deleted from cart
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+        500:
+          description: Internal server error
+  /api/carts/{cid}/product/{pid}/quantity:
+    put:
+      summary: Update product quantity in a cart
+      description: Update the quantity of a product in a cart by the cart ID and product ID
+      tags:
+        - Cart
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          schema:
+            type: string
+          description: ID of the cart to update product quantity in
+        - in: path
+          name: pid
+          required: true
+          schema:
+            type: string
+          description: ID of the product to update quantity for
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                quantity:
+                  type: integer
+                  description: New quantity of the product
+      responses:
+        200:
+          description: Product quantity successfully updated in cart
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+        500:
+          description: Internal server error
+  /api/carts/{cid}/purchase:
+    post:
+      summary: Purchase products in a cart
+      description: Purchase all products in a cart by the cart ID
+      tags:
+        - Cart
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          schema:
+            type: string
+          description: ID of the cart to purchase products from
+      responses:
+        200:
+          description: Cart products successfully purchased
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+        500:
+          description: Internal server error
+components:
+  schemas:
+    CartProduct:
+      type: object
+      properties:
+        product:
+          type: string
+        quantity:
+          type: integer
