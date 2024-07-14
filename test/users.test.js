@@ -20,22 +20,27 @@ describe("Users test", () => {
           )
       );
   });
-});
 
-beforeEach(async () => {
-  await mongoose.connection.collections.users.drop();
-});
+  beforeEach(async () => {
+    await mongoose.connection.collections.users.drop();
+  });
 
-it("New user test", async () => {
-  const newUser = {
-    first_name: "Juan",
-    last_name: "Test",
-    email: "juan@test.com",
-    cart: newCart._id,
-    password: createHash("passwordTest"),
-    age: "30",
-  };
+  it("New user test", async () => {
+    const newUser = {
+      first_name: "Juan",
+      last_name: "Test",
+      email: "juan@test.com",
+      cart: newCart._id,
+      password: createHash("passwordTest"),
+      age: "30",
+    };
 
-  const testResult = await userController.register(newUser);
-  assert.ok(testResult._id);
+    const testResult = await userController.register(newUser);
+    assert.ok(testResult._id);
+  });
+
+  after((done) => {
+    mongoose.connection.close();
+    done();
+  });
 });
