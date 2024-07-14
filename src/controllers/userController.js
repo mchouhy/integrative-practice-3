@@ -53,7 +53,12 @@ export class UserController {
 
   async login(request, response) {
     const { email, password } = request.body;
+    const successMessage = request.query.success;
     try {
+      if (successMessage) {
+        response.render("login", { success: successMessage });
+      }
+
       const userExists = await userModel.findOne({ email });
 
       if (!userExists) {
@@ -176,7 +181,12 @@ export class UserController {
       //   success:
       //     "¡Contraseña reestablecida con éxito! Ya puedes iniciar sesión.",
       // });
-      return response.redirect("/login");
+      return response.redirect(
+        "/login?success=" +
+          encodeURIComponent(
+            "¡Contraseña reestablecida con éxito! Ya puedes iniciar sesión."
+          )
+      );
     } catch (error) {
       console.error(error);
       return response.status(500).render("password-reset", {
