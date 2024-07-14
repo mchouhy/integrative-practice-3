@@ -43,7 +43,9 @@ import errorHandler from "./middlewares/errors.js";
 import { addLogger } from "./middlewares/logger.js";
 // Variables env:
 const { port } = configObject;
-
+// Importación de swagger:
+import swaggerUiExpress from "swagger-ui-express";
+import { specs } from "./config/swagger.config.js";
 // MIDDLEWARES:
 // Middleware que permite analizar los cuerpos de las solicitudes con datos codificados en URL y hacerlos accesibles en req.body:
 app.use(express.urlencoded({ extended: true }));
@@ -94,7 +96,9 @@ app.use("/mockingproducts", mockingProductsApiRouter);
 app.use("/api/loggertest", loggerApiRouter);
 // Endpoint de la ruta de views:
 app.use("/", viewsRouter);
-
+// Swagger:
+app.use("/apidocs", swaggerUiExpress.serve, swaggerUiExpress.setup(specs));
+// Cache false para poder ver los cambios de desarrollo en handlebars:
 app.set("view cache", false);
 
 // PUERTO:
